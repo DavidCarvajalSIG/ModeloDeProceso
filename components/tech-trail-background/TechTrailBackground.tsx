@@ -150,7 +150,7 @@ export default function TechTrailBackground({
         context.fillStyle = gradient;
         context.fillRect(0, 0, width, height);
 
-        const cyanGlow = context.createRadialGradient(
+        const redGlow = context.createRadialGradient(
           width * 0.2,
           height * 0.16,
           40,
@@ -158,13 +158,13 @@ export default function TechTrailBackground({
           height * 0.16,
           Math.max(width, height) * 0.75
         );
-        cyanGlow.addColorStop(0, "rgba(34, 211, 238, 0.14)");
-        cyanGlow.addColorStop(0.6, "rgba(34, 211, 238, 0.05)");
-        cyanGlow.addColorStop(1, "rgba(34, 211, 238, 0)");
-        context.fillStyle = cyanGlow;
+        redGlow.addColorStop(0, "rgba(248, 46, 53, 0.14)");
+        redGlow.addColorStop(0.6, "rgba(248, 46, 53, 0.05)");
+        redGlow.addColorStop(1, "rgba(248, 46, 53, 0)");
+        context.fillStyle = redGlow;
         context.fillRect(0, 0, width, height);
 
-        const indigoGlow = context.createRadialGradient(
+        const crimsonGlow = context.createRadialGradient(
           width * 0.83,
           height * 0.88,
           40,
@@ -172,10 +172,10 @@ export default function TechTrailBackground({
           height * 0.88,
           Math.max(width, height) * 0.65
         );
-        indigoGlow.addColorStop(0, "rgba(99, 102, 241, 0.18)");
-        indigoGlow.addColorStop(0.6, "rgba(99, 102, 241, 0.06)");
-        indigoGlow.addColorStop(1, "rgba(99, 102, 241, 0)");
-        context.fillStyle = indigoGlow;
+        crimsonGlow.addColorStop(0, "rgba(196, 22, 28, 0.18)");
+        crimsonGlow.addColorStop(0.6, "rgba(196, 22, 28, 0.06)");
+        crimsonGlow.addColorStop(1, "rgba(196, 22, 28, 0)");
+        context.fillStyle = crimsonGlow;
         context.fillRect(0, 0, width, height);
       }
 
@@ -183,8 +183,8 @@ export default function TechTrailBackground({
       const offset = (time * 0.02) % gridSize;
       context.lineWidth = 1;
       context.strokeStyle = hasBackgroundImage
-        ? "rgba(120, 255, 240, 0.13)"
-        : "rgba(120, 255, 240, 0.08)";
+        ? "rgba(254, 106, 111, 0.13)"
+        : "rgba(254, 106, 111, 0.08)";
       context.beginPath();
 
       for (let x = -gridSize + offset; x < width + gridSize; x += gridSize) {
@@ -214,12 +214,12 @@ export default function TechTrailBackground({
         if (life <= 0) continue;
 
         const mix = i / points.length;
-        const red = Math.round(90 + mix * 32);
-        const green = Math.round(219 + mix * 20);
-        const blue = Math.round(255 - mix * 18);
+        const red = Math.round(196 + mix * 58);
+        const green = Math.round(22 + mix * 54);
+        const blue = Math.round(28 + mix * 42);
         context.strokeStyle = `rgba(${red}, ${green}, ${blue}, ${0.08 + life * 0.62})`;
         context.shadowBlur = 6 + life * 22;
-        context.shadowColor = `rgba(120, 255, 240, ${0.18 + life * 0.5})`;
+        context.shadowColor = `rgba(248, 46, 53, ${0.18 + life * 0.5})`;
         context.lineWidth = 1.8 + life * 2.8;
 
         context.beginPath();
@@ -235,7 +235,7 @@ export default function TechTrailBackground({
         const life = 1 - age;
         if (life <= 0) continue;
 
-        context.fillStyle = `rgba(184, 244, 255, ${0.16 + life * 0.5})`;
+        context.fillStyle = `rgba(254, 200, 202, ${0.16 + life * 0.5})`;
         context.beginPath();
         context.arc(point.x, point.y, 1 + life * 1.8, 0, Math.PI * 2);
         context.fill();
@@ -259,7 +259,7 @@ export default function TechTrailBackground({
         const tailX = x - spark.vx * 20;
         const tailY = y - spark.vy * 20;
 
-        context.strokeStyle = `rgba(161, 245, 255, ${life * 0.66})`;
+        context.strokeStyle = `rgba(254, 166, 170, ${life * 0.66})`;
         context.lineWidth = 0.9 + life * 1.2;
         context.beginPath();
         context.moveTo(tailX, tailY);
@@ -271,7 +271,7 @@ export default function TechTrailBackground({
     function drawCursor(time: number) {
       if (!pointer.active || prefersReducedMotion) return;
       const pulse = 0.7 + Math.sin(time * 0.01) * 0.3;
-      context.strokeStyle = `rgba(180, 249, 255, ${0.2 + pulse * 0.35})`;
+      context.strokeStyle = `rgba(254, 186, 188, ${0.2 + pulse * 0.35})`;
       context.lineWidth = 1.2;
       context.beginPath();
       context.arc(pointer.x, pointer.y, 12 + pulse * 4, 0, Math.PI * 2);

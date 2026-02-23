@@ -1,5 +1,5 @@
-import ModeloClient from "./ModeloClient";
+import { redirect } from "next/navigation";
 
 export default function ModeloPage() {
-  return <ModeloClient />;
+  redirect("/etapa-1");
 }

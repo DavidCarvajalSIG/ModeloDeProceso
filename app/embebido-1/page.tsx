@@ -1,5 +1,5 @@
-import Embebido1Client from "./Embebido1Client";
+import { redirect } from "next/navigation";
 
 export default function Embebido1Page() {
-  return <Embebido1Client />;
+  redirect("/etapa-1");
 }
