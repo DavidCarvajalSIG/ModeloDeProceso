@@ -1,0 +1,790 @@
+.stageRoot {
+  --uao-red-2: #510608;
+  --uao-red-3: #8b0304;
+  --uao-red-4: #9e0b0f;
+  --uao-red-6: #f82e35;
+  --uao-red-7: #fe6a6f;
+  --uao-grey-3: #9e9e9e;
+  --uao-grey-4: #d1d1d1;
+  --uao-grey-5: #f4f4f4;
+
+  position: relative;
+  min-height: 100dvh;
+  color: #fff;
+  background:
+    radial-gradient(1000px 560px at 16% -10%, color-mix(in srgb, var(--uao-red-7) 16%, transparent), transparent 66%),
+    radial-gradient(800px 520px at 92% 112%, color-mix(in srgb, var(--uao-red-3) 20%, transparent), transparent 70%),
+    linear-gradient(180deg, #0a0506 0%, #050304 56%, #020102 100%);
+}
+
+.stageRoot .techBackground {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100dvh;
+  z-index: 0;
+}
+
+.main {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: 20px clamp(12px, 2vw, 28px) 56px;
+}
+
+.mainNoViewer {
+  padding-top: 20px;
+}
+
+.contentColumn {
+  width: min(1180px, 100%);
+  margin-inline: auto;
+  display: grid;
+  gap: 24px;
+  padding-right: min(31vw, 380px);
+}
+
+.contentColumnNoViewer {
+  padding-right: 0;
+}
+
+.viewerDock {
+  position: fixed;
+  right: 14px;
+  top: 12px;
+  z-index: 4;
+  width: min(30vw, 350px);
+  min-width: 270px;
+  border-radius: 20px;
+  border: 1px solid color-mix(in srgb, var(--uao-red-6) 38%, transparent);
+  background: linear-gradient(180deg, rgba(8, 5, 6, 0.9), rgba(5, 3, 4, 0.92));
+  backdrop-filter: blur(10px);
+  box-shadow:
+    inset 0 0 0 1px rgba(248, 46, 53, 0.14),
+    0 20px 56px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+.viewerDock::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(248, 46, 53, 0.52), transparent 34%) 0 0 / 100% 2px no-repeat,
+    linear-gradient(0deg, rgba(248, 46, 53, 0.46), transparent 42%) 0 0 / 2px 100% no-repeat,
+    linear-gradient(-90deg, rgba(248, 46, 53, 0.52), transparent 34%) 100% 100% / 100% 2px no-repeat,
+    linear-gradient(180deg, rgba(248, 46, 53, 0.46), transparent 42%) 100% 100% / 2px 100% no-repeat;
+}
+
+.viewerHeader {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 12px 8px;
+}
+
+.viewerEyebrow {
+  margin: 0;
+  color: var(--uao-grey-4);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.viewerTitle {
+  margin: 4px 0 0;
+  font-size: 18px;
+  line-height: 1.1;
+}
+
+.viewerStatus {
+  align-self: center;
+  border-radius: 999px;
+  padding: 5px 9px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.viewerStatus_active {
+  color: var(--uao-red-7);
+  border-color: rgba(254, 106, 111, 0.34);
+  background: rgba(139, 3, 4, 0.2);
+}
+
+.viewerStatus_done {
+  color: #ffe9ea;
+  border-color: rgba(248, 46, 53, 0.42);
+  background: rgba(80, 6, 8, 0.34);
+}
+
+.viewerCanvasWrap {
+  position: relative;
+  height: 188px;
+  margin: 0 10px;
+  border-radius: 14px;
+  border: 1px solid rgba(248, 46, 53, 0.2);
+  background: linear-gradient(180deg, rgba(8, 5, 6, 0.7), rgba(4, 2, 3, 0.9));
+  overflow: hidden;
+}
+
+.viewerCanvasWrapDisabled {
+  background:
+    linear-gradient(180deg, rgba(8, 5, 6, 0.78), rgba(4, 2, 3, 0.94)),
+    radial-gradient(circle at 50% 50%, rgba(248, 46, 53, 0.05), transparent 60%);
+}
+
+.viewerCanvasOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 8px;
+  padding: 14px;
+  text-align: center;
+  background:
+    linear-gradient(180deg, rgba(3, 2, 2, 0.12), rgba(3, 2, 2, 0.46));
+}
+
+.viewerCanvasOverlayLabel {
+  border-radius: 999px;
+  border: 1px solid rgba(248, 46, 53, 0.24);
+  background: rgba(80, 6, 8, 0.22);
+  color: var(--uao-red-7);
+  padding: 4px 9px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.viewerCanvasOverlayCopy {
+  margin: 0;
+  color: var(--uao-grey-4);
+  font-size: 12px;
+  line-height: 1.35;
+  max-width: 26ch;
+}
+
+.viewerMeta {
+  position: relative;
+  z-index: 1;
+  padding: 10px 12px 12px;
+  display: grid;
+  gap: 5px;
+}
+
+.viewerMetaRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 12px;
+}
+
+.viewerMetaKey {
+  color: var(--uao-grey-4);
+}
+
+.viewerMetaValue {
+  color: #fff;
+  font-weight: 600;
+}
+
+.section {
+  width: 100%;
+  min-height: 52dvh;
+  padding-block: 14px;
+  display: grid;
+  align-items: start;
+}
+
+.sectionInner {
+  width: 100%;
+  display: grid;
+  gap: 12px;
+  transform-origin: 50% 0%;
+  transition: opacity 280ms ease, transform 360ms ease, filter 280ms ease;
+}
+
+.sectionMuted .sectionInner {
+  opacity: 0.52;
+  filter: saturate(0.78) blur(1.5px);
+  transform: translateY(12px) scale(0.986);
+}
+
+.sectionRevealed:not(.sectionActive) .sectionInner {
+  opacity: 0.96;
+  transform: translateY(0) scale(0.996);
+}
+
+.sectionActive .sectionInner {
+  opacity: 1;
+  filter: none;
+  transform: translateY(0) scale(1);
+}
+
+.sectionLabelRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.sectionLabelRow,
+.header,
+.body > * {
+  opacity: 0;
+  transform: translateY(14px) scale(0.992);
+  transition:
+    opacity 360ms ease,
+    transform 420ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    filter 320ms ease;
+  will-change: opacity, transform;
+}
+
+.sectionRevealed .sectionLabelRow,
+.sectionRevealed .header,
+.sectionRevealed .body > * {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.sectionRevealed .sectionLabelRow {
+  transition-delay: 10ms;
+}
+
+.sectionRevealed .header {
+  transition-delay: 70ms;
+}
+
+.sectionRevealed .body > * {
+  transition-delay: calc(120ms + (var(--stagger-index, 0) * 75ms));
+}
+
+.sectionMuted .sectionLabelRow {
+  transition-delay: 540ms;
+}
+
+.sectionMuted .header {
+  transition-delay: 480ms;
+}
+
+.sectionMuted .body > * {
+  transition-delay: calc((10 - var(--stagger-index, 0)) * 55ms);
+}
+
+.body > *:nth-child(1) {
+  --stagger-index: 0;
+}
+
+.body > *:nth-child(2) {
+  --stagger-index: 1;
+}
+
+.body > *:nth-child(3) {
+  --stagger-index: 2;
+}
+
+.body > *:nth-child(4) {
+  --stagger-index: 3;
+}
+
+.body > *:nth-child(5) {
+  --stagger-index: 4;
+}
+
+.body > *:nth-child(6) {
+  --stagger-index: 5;
+}
+
+.body > *:nth-child(7) {
+  --stagger-index: 6;
+}
+
+.body > *:nth-child(8) {
+  --stagger-index: 7;
+}
+
+.body > *:nth-child(9) {
+  --stagger-index: 8;
+}
+
+.body > *:nth-child(10) {
+  --stagger-index: 9;
+}
+
+.body > *:nth-child(n + 11) {
+  --stagger-index: 10;
+}
+
+.sectionLabel {
+  border-radius: 999px;
+  border: 1px solid rgba(248, 46, 53, 0.34);
+  padding: 5px 10px;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--uao-grey-5);
+  background: rgba(81, 6, 8, 0.22);
+}
+
+.sectionState {
+  color: var(--uao-grey-4);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.surfaceCard {
+  width: 100%;
+  border-radius: 24px;
+  border: 1px solid rgba(248, 46, 53, 0.22);
+  background: linear-gradient(180deg, rgba(9, 6, 7, 0.84), rgba(4, 3, 4, 0.88));
+  box-shadow:
+    inset 0 0 0 1px rgba(248, 46, 53, 0.08),
+    0 22px 64px rgba(0, 0, 0, 0.38);
+  overflow: hidden;
+}
+
+.surfacePlain {
+  width: 100%;
+  display: grid;
+  gap: 12px;
+}
+
+.surfaceCard .header {
+  padding: 20px 22px 12px;
+}
+
+.surfaceCard .body {
+  padding: 0 22px 22px;
+}
+
+.header {
+  width: 100%;
+  display: grid;
+  gap: 8px;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(22px, 2.45vw, 32px);
+  line-height: 1.15;
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--uao-grey-4);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.body {
+  width: 100%;
+  display: grid;
+  gap: 16px;
+}
+
+.dialogueWrap {
+  width: 100%;
+  max-width: 100%;
+}
+
+.buttonRow {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.buttonPrimary,
+.buttonSecondary {
+  border-radius: 12px;
+  padding: 11px 16px;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: transform 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
+}
+
+.buttonPrimary {
+  border: 1px solid rgba(248, 46, 53, 0.38);
+  background: linear-gradient(90deg, rgba(139, 3, 4, 0.92), rgba(80, 6, 8, 0.94));
+  color: #fff;
+}
+
+.buttonSecondary {
+  border: 1px solid rgba(209, 209, 209, 0.2);
+  background: rgba(8, 5, 6, 0.86);
+  color: var(--uao-grey-5);
+}
+
+.buttonPrimary:hover:not(:disabled),
+.buttonSecondary:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.buttonPrimary:disabled,
+.buttonSecondary:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.railPinArea {
+  --rail-height-multiplier: 4;
+  position: relative;
+  min-height: calc(100dvh * var(--rail-height-multiplier));
+}
+
+.railSticky {
+  position: sticky;
+  top: 0;
+  min-height: 100dvh;
+  display: grid;
+  align-content: center;
+  gap: 12px;
+  padding-block: clamp(8px, 3dvh, 28px);
+}
+
+.railHead {
+  display: grid;
+  gap: 6px;
+}
+
+.railLabel {
+  color: var(--uao-grey-4);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.railTitle {
+  margin: 0;
+  font-size: clamp(18px, 1.9vw, 24px);
+}
+
+.railHint {
+  margin: 0;
+  color: var(--uao-grey-3);
+  font-size: 12px;
+}
+
+.railViewport {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 16px;
+  border: 1px solid rgba(248, 46, 53, 0.12);
+  background: rgba(4, 2, 3, 0.18);
+  backdrop-filter: blur(2px) saturate(1.05);
+}
+
+.railTrack {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(min(82vw, 720px), 1fr);
+  gap: 12px;
+  padding: 12px;
+  will-change: transform;
+}
+
+.railPanel {
+  min-height: clamp(260px, 42dvh, 500px);
+  border-radius: 16px;
+  border: 1px solid rgba(248, 46, 53, 0.12);
+  background:
+    radial-gradient(circle at 85% 12%, rgba(248, 46, 53, 0.1), transparent 44%),
+    linear-gradient(180deg, rgba(10, 6, 7, 0.46), rgba(5, 3, 4, 0.54));
+  box-shadow:
+    inset 0 0 0 1px rgba(248, 46, 53, 0.05),
+    0 8px 24px rgba(0, 0, 0, 0.14);
+}
+
+.railPanelIntro {
+  background:
+    radial-gradient(circle at 20% 15%, rgba(254, 106, 111, 0.12), transparent 46%),
+    linear-gradient(180deg, rgba(12, 7, 8, 0.5), rgba(6, 4, 5, 0.58));
+}
+
+.railPanelInner {
+  height: 100%;
+  display: grid;
+  align-content: center;
+  gap: 10px;
+  padding: clamp(18px, 2.4vw, 28px);
+}
+
+.railPanelTag {
+  justify-self: start;
+  border-radius: 999px;
+  border: 1px solid rgba(248, 46, 53, 0.24);
+  background: rgba(80, 6, 8, 0.22);
+  color: var(--uao-red-7);
+  padding: 5px 10px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.railPanelTitle {
+  margin: 0;
+  font-size: clamp(22px, 2.2vw, 30px);
+  line-height: 1.1;
+}
+
+.railPanelCopy {
+  margin: 0;
+  color: var(--uao-grey-4);
+  font-size: clamp(15px, 1.15vw, 8px);
+  line-height: 1.45;
+  max-width: 52ch;
+}
+
+.railProgressTrack {
+  width: 100%;
+  height: 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(248, 46, 53, 0.14);
+  background: rgba(255, 255, 255, 0.04);
+  overflow: hidden;
+}
+
+.railProgressFill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--uao-red-4), var(--uao-red-6), var(--uao-red-7));
+  box-shadow: 0 0 16px rgba(248, 46, 53, 0.32);
+  transition: width 100ms linear;
+}
+
+.animationCard {
+  width: 100%;
+  display: grid;
+  gap: 12px;
+  border-radius: 18px;
+  border: 1px solid rgba(248, 46, 53, 0.18);
+  background: linear-gradient(180deg, rgba(12, 7, 8, 0.76), rgba(6, 4, 5, 0.82));
+  padding: 14px;
+}
+
+.animationCardDone {
+  border-color: rgba(248, 46, 53, 0.34);
+  box-shadow: inset 0 0 0 1px rgba(248, 46, 53, 0.08);
+}
+
+.animationHead {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.animationTitle {
+  margin: 0;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+}
+
+.animationDescription {
+  margin: 6px 0 0;
+  color: var(--uao-grey-4);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.statusChip {
+  border-radius: 999px;
+  border: 1px solid rgba(248, 46, 53, 0.22);
+  padding: 5px 8px;
+  color: var(--uao-red-7);
+  background: rgba(139, 3, 4, 0.18);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.statusChipDone {
+  color: #ffe9ea;
+  background: rgba(80, 6, 8, 0.3);
+  border-color: rgba(248, 46, 53, 0.4);
+}
+
+.animationViewport {
+  border-radius: 14px;
+  border: 1px solid rgba(248, 46, 53, 0.16);
+  background: rgba(4, 2, 3, 0.78);
+  overflow: hidden;
+}
+
+.animationVideo {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: min(48dvh, 420px);
+  object-fit: contain;
+  background: rgba(0, 0, 0, 0.5);
+  display: block;
+}
+
+.reducedMotionFallback {
+  min-height: 240px;
+  padding: 14px;
+  display: grid;
+  align-content: center;
+  gap: 10px;
+}
+
+.reducedMotionFrame {
+  height: 160px;
+  border-radius: 12px;
+  border: 1px solid rgba(248, 46, 53, 0.16);
+  background:
+    radial-gradient(circle at 20% 50%, rgba(254, 106, 111, 0.2), transparent 45%),
+    radial-gradient(circle at 78% 40%, rgba(248, 46, 53, 0.14), transparent 48%),
+    linear-gradient(135deg, rgba(81, 6, 8, 0.56), rgba(5, 3, 4, 0.86));
+}
+
+.reducedMotionFallback p {
+  margin: 0;
+  color: var(--uao-grey-4);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.animationFeedbackCard {
+  border-radius: 14px;
+  border: 1px solid rgba(248, 46, 53, 0.26);
+  background:
+    radial-gradient(circle at 12% 15%, rgba(254, 106, 111, 0.12), transparent 42%),
+    rgba(20, 8, 10, 0.88);
+  padding: 12px 14px;
+  display: grid;
+  gap: 6px;
+  box-shadow: inset 0 0 0 1px rgba(248, 46, 53, 0.06);
+}
+
+.animationFeedbackTitle {
+  color: #ffe9ea;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+}
+
+.animationFeedbackBody {
+  margin: 0;
+  color: var(--uao-grey-4);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.animationFooter {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 1120px) {
+  .main {
+    padding-top: 220px;
+  }
+
+  .mainNoViewer {
+    padding-top: 20px;
+  }
+
+  .contentColumn {
+    padding-right: 0;
+    width: min(1120px, 100%);
+  }
+
+  .viewerDock {
+    width: calc(100vw - 24px);
+    max-width: 520px;
+    min-width: 0;
+    left: 12px;
+    right: 12px;
+    top: 10px;
+  }
+
+  .viewerCanvasWrap {
+    height: 150px;
+  }
+
+  .railTrack {
+    grid-auto-columns: minmax(min(86vw, 640px), 1fr);
+  }
+}
+
+@media (max-width: 760px) {
+  .main {
+    padding: 210px 10px 34px;
+  }
+
+  .mainNoViewer {
+    padding: 20px 10px 34px;
+  }
+
+  .surfaceCard .header {
+    padding: 15px 15px 9px;
+  }
+
+  .surfaceCard .body {
+    padding: 0 15px 15px;
+  }
+
+  .animationHead {
+    display: grid;
+  }
+
+  .buttonRow {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .buttonPrimary,
+  .buttonSecondary {
+    width: 100%;
+    text-align: center;
+  }
+
+  .railTrack {
+    gap: 10px;
+    padding: 10px;
+    grid-auto-columns: minmax(calc(100vw - 32px), 1fr);
+  }
+
+  .railPanel {
+    min-height: 230px;
+  }
+
+  .railPanelTitle {
+    font-size: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sectionInner,
+  .sectionLabelRow,
+  .header,
+  .body > *,
+  .buttonPrimary,
+  .buttonSecondary {
+    transition: none;
+  }
+
+  .sectionMuted .sectionInner,
+  .sectionRevealed:not(.sectionActive) .sectionInner,
+  .sectionActive .sectionInner,
+  .sectionLabelRow,
+  .header,
+  .body > * {
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+}

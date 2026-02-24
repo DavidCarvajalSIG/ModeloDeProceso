@@ -7,29 +7,47 @@ type ModelProps = {
   url: string;
 };
 
+type MaterialLike = {
+  clone: () => MaterialLike;
+  toneMapped?: boolean;
+  envMapIntensity?: number;
+};
+
+type MeshLike = {
+  isMesh?: boolean;
+  material?: MaterialLike | MaterialLike[];
+};
+
+type TraversableScene = {
+  clone: (recursive?: boolean) => TraversableScene;
+  traverse: (callback: (node: unknown) => void) => void;
+};
+
 export default function Model({ url }: ModelProps) {
-  const { scene } = useGLTF(url);
+  const { scene } = useGLTF(url) as { scene: TraversableScene };
 
   const tunedScene = useMemo(() => {
     const cloned = scene.clone(true);
 
-    cloned.traverse((node: any) => {
-      if (!node?.isMesh || !node.material) return;
+    cloned.traverse((node: unknown) => {
+      const mesh = node as MeshLike;
+      if (!mesh.isMesh || !mesh.material) return;
 
-      const materials = Array.isArray(node.material)
-        ? node.material
-        : [node.material];
-      const localMaterials = materials.map((mat: any) => mat.clone());
+      const materials = Array.isArray(mesh.material)
+        ? mesh.material
+        : [mesh.material];
+      const localMaterials = materials.map((mat: MaterialLike) => mat.clone());
 
-      node.material = Array.isArray(node.material)
+      mesh.material = Array.isArray(mesh.material)
         ? localMaterials
         : localMaterials[0];
 
-      localMaterials.forEach((localMat: any) => {
+      localMaterials.forEach((localMat) => {
+        const tunableMat = localMat as MaterialLike;
         // Keep colors as authored in the model.
-        localMat.toneMapped = false;
-        if (typeof localMat.envMapIntensity === "number") {
-          localMat.envMapIntensity = 0;
+        tunableMat.toneMapped = false;
+        if (typeof tunableMat.envMapIntensity === "number") {
+          tunableMat.envMapIntensity = 0;
         }
       });
     });

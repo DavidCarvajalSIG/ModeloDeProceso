@@ -6,7 +6,7 @@ import { Center, OrbitControls } from "@react-three/drei";
 import Model from "@/app/modelo/Model";
 
 function RotatingSpiralMini() {
-  const spinRef = useRef<any>(null);
+  const spinRef = useRef<{ rotation: { y: number } } | null>(null);
 
   useFrame((_, delta) => {
     if (!spinRef.current) return;
@@ -47,4 +47,3 @@ export default function MiniSpiralViewer() {
     </Canvas>
   );
 }
-

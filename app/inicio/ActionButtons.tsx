@@ -66,8 +66,7 @@ export default function ActionButtons() {
 
       <ButtonUI label="Iniciar" variant="primary" as="link" href="/etapa-1" />
 
-      {/* Por ahora no hacen nada, pero quedan visualmente igual */}
-      <ButtonUI label="Opciones" variant="danger" as="link" href="" />
+      <ButtonUI label="Opciones" variant="danger" as="link" href="/opciones" />
     </div>
   );
 }
